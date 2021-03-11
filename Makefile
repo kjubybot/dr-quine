@@ -1,6 +1,6 @@
 CC = gcc
 AS = nasm
-ASFLAGS = -f elf64
+ASFLAGS = -f macho64
 
 RM = rm -rf
 
@@ -43,7 +43,7 @@ $(C_COLLEEN): $(COBJDIR)$(COLLEEN_OBJ)
 	$(CC) -o $@ $^
 
 $(ASM_COLLEEN): $(ASMOBJDIR)$(COLLEEN_OBJ)
-	$(CC) -no-pie -o $@ $^
+	$(CC) -o $@ $^
 
 $(GO_COLLEEN): $(GODIR)$(COLLEEN).go
 	go build -o $(GODIR) $<
@@ -52,7 +52,7 @@ $(C_GRACE): $(COBJDIR)$(GRACE_OBJ)
 	$(CC) -o $@ $^
 
 $(ASM_GRACE): $(ASMOBJDIR)$(GRACE_OBJ)
-	$(CC) -no-pie -o $@ $^
+	$(CC) -o $@ $^
 
 $(GO_GRACE): $(GODIR)$(GRACE).go
 	go build -o $(GODIR) $<
@@ -61,7 +61,7 @@ $(C_SULLY): $(COBJDIR)$(SULLY_OBJ)
 	$(CC) -o $@ $^
 
 $(ASM_SULLY): $(ASMOBJDIR)$(SULLY_OBJ)
-	$(CC) -no-pie -o $@ $^
+	$(CC) -o $@ $^
 
 $(GO_SULLY): $(GODIR)$(SULLY).go
 	go build -o $(GODIR) $<
@@ -80,6 +80,9 @@ $(ASMOBJDIR)%.o: $(ASMDIR)%.s
 
 clean:
 	$(RM) $(COBJDIR) $(ASMOBJDIR)
+	$(RM) $(CDIR)Grace_*
+	$(RM) $(ASMDIR)Grace_*
+	$(RM) $(GODIR)Grace_*
 	$(RM) $(CDIR)Sully_*
 	$(RM) $(ASMDIR)Sully_*
 	$(RM) $(GODIR)Sully_*
