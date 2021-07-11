@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os/exec"
+	"path"
+	"runtime"
 )
 
 func main() {
@@ -11,7 +13,10 @@ func main() {
 	if i == 0 {
 		return
 	}
-	i--
+	_, filename, _, _ := runtime.Caller(0)
+	if path.Base(filename) != "Sully.go" {
+		i--
+	}
 	s := fmt.Sprintf("Sully_%d.go", i)
 	v := `package main
 
@@ -19,6 +24,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os/exec"
+	"path"
+	"runtime"
 )
 
 func main() {
@@ -26,7 +33,10 @@ func main() {
 	if i == 0 {
 		return
 	}
-	i--
+	_, filename, _, _ := runtime.Caller(0)
+	if path.Base(filename) != "Sully.go" {
+		i--
+	}
 	s := fmt.Sprintf("Sully_%%d.go", i)
 	v := %c%s%c
 	v = fmt.Sprintf(v, i, 96, v, 96)
